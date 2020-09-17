@@ -5,8 +5,14 @@ import sys, os, subprocess, hashlib
 def cmd(command):
 	print (command)
 	global process
-	process.stdin.write ((':'.join (command) + '\n').encode ("utf-8"))
-	process.stdin.flush ()
+	try:
+		process.stdin.write ((':'.join (command) + '\n').encode ("utf-8"))
+		process.stdin.flush ()
+	except OSError as e:
+		rc = process.poll()
+		if rc:
+			print ("Subprocess died: %s" % e, file=sys.stderr)
+			print ("Exit code: %i" % rc, file=sys.stderr)
 	return process.stdout.readline().decode ("utf-8").strip ()
 
 args = sys.argv[1:]
