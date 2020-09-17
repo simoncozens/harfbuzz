@@ -11,7 +11,7 @@ def cmd(command):
 	except OSError as e:
 		rc = process.poll()
 		if rc:
-			print ("Subprocess died: %s" % e, file=sys.stderr)
+			print ("Sub-process died: %s" % e, file=sys.stderr)
 			print ("Exit code: %i" % rc, file=sys.stderr)
 	return process.stdout.readline().decode ("utf-8").strip ()
 
